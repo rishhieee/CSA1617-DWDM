@@ -1,0 +1,29 @@
+# Define class intervals
+lower_bounds <- c(1, 5, 15, 20, 50, 80)
+upper_bounds <- c(5, 15, 20, 50, 80, 110)
+
+# Define frequencies
+frequency <- c(200, 450, 300, 1500, 700, 44)
+
+# Compute cumulative frequency
+cum_freq <- cumsum(frequency)
+
+# Compute total frequency
+N <- sum(frequency)  # Total number of observations
+N_half <- N / 2      # Half of total frequency
+
+# Find median class index
+median_class_index <- which(cum_freq >= N_half)[1]  # First class where cum_freq exceeds N_half
+
+# Extract required values
+L <- lower_bounds[median_class_index]  # Lower boundary of median class
+F <- ifelse(median_class_index == 1, 0, cum_freq[median_class_index - 1])  # Cumulative frequency before median class
+f_median <- frequency[median_class_index]  # Frequency of median class
+h <- upper_bounds[median_class_index] - lower_bounds[median_class_index]  # Class width
+
+# Compute Median
+median_value <- L + ((N_half - F) / f_median) * h
+
+# Print results
+print(paste("Approximate Median:", round(median_value, 2)))
+
