@@ -1,0 +1,43 @@
+# Given marks data
+marks <- c(55, 60, 71, 63, 55, 65, 50, 55, 58, 59, 61, 63, 65, 67, 71, 72, 75)
+
+# Sort the marks
+marks <- sort(marks)
+
+# Number of bins
+num_bins <- 3
+
+### (a) Equal-Frequency (Equi-Depth) Partitioning ###
+bin_size <- ceiling(length(marks) / num_bins)  # Determine bin size
+
+# Split data into equal-frequency bins
+equal_freq_bins <- split(marks, ceiling(seq_along(marks) / bin_size))
+
+# Print Equal-Frequency Bins
+print("Equal-Frequency Bins:")
+print(equal_freq_bins)
+
+### (b) Equal-Width Partitioning ###
+min_val <- min(marks)
+max_val <- max(marks)
+bin_width <- (max_val - min_val) / num_bins  # Calculate bin width
+
+# Assign marks to equal-width bins
+equal_width_bins <- cut(marks, breaks = seq(min_val, max_val, by = bin_width), include.lowest = TRUE)
+
+# Print Equal-Width Bins
+print("Equal-Width Bins:")
+print(table(equal_width_bins))
+
+### Histogram Plot ###
+par(mfrow = c(1, 2))  # Set layout for two plots
+
+# Histogram for Equal-Frequency Partitioning
+hist(marks, breaks = length(equal_freq_bins), col = "blue", main = "Equal-Frequency Binning",
+     xlab = "Marks", ylab = "Frequency", border = "black")
+
+# Histogram for Equal-Width Partitioning
+hist(marks, breaks = seq(min_val, max_val, by = bin_width), col = "red", main = "Equal-Width Binning",
+     xlab = "Marks", ylab = "Frequency", border = "black")
+
+par(mfrow = c(1, 1))  # Reset layout
